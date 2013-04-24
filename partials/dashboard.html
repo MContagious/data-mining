@@ -1,0 +1,49 @@
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span3">
+			<div class="container-fluid">
+				<div class="row-fluid">
+					<div class="row">
+						<div class="span3">
+							<i class="app_45x45_icon-programs"/>
+						</div>
+						<div class="span9">
+							<b>Unique Program Names</b>
+						</div>
+					</div>
+					<div class="row">						
+					</div>
+				</div>		
+			</div>
+		</div>
+	
+		<div class="span9">
+			<div class="column-fluid">
+				<div>
+					<div class="navbar-inner">				
+						<i class="app_45x45_icon-programs"/>
+						<b>Unique program-ids</b>
+						<input type="text" class="input-medium search-query" ng-model="byNameFilter"
+						 placeholder="Search program names"/>
+						<select ng-model="byDateFilter" multiple="multiple">
+							<option ng-repeat="date in dates" value="{{date}}">{{date}}</option>
+						</select>
+						<a href="">
+							<i class="app_45x45_icon-gen-reports" title="View detailed reports"/>
+						</a>
+						<!--<b>{{byDateFilter}}</b>-->
+						<i class="{{widgets.programs.icon}} pull-right" ng-click="toggle(widgets.programs)"/>
+						<i class="file_16x16_icon-xml pull-right"/>
+						<i class="file_16x16_icon-csv pull-right"/>
+					</div>
+					<div class="thumbnails thumbnail" id="chart_dates_prog_count" ng-show="widgets.programs.status"/>
+					<div class="thumbnails thumbnail" ng-show="widgets.programs.status">
+						<repeater ng:repeat="program in programNames | filter:dateFilter  | filter:byNameFilter | orderBy:programsOrderBy">
+							<a href="#/client/{{client}}/program/{{program.name}}" class="span2 btn">{{program.name}}</a>
+						</repeater>						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

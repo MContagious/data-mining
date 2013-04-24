@@ -1,0 +1,144 @@
+/* app css stylesheet */
+
+.menu {
+  list-style: none;
+  border-bottom: 0.1em solid black;
+  margin-bottom: 2em;
+  padding: 0 0 0.5em;
+}
+
+.menu:before {
+  content: "[";
+}
+
+.menu:after {
+  content: "]";
+}
+
+.menu > li {
+  display: inline;
+}
+
+.menu > li:before {
+  content: "|";
+  padding-right: 0.3em;
+}
+
+.menu > li:nth-child(1):before {
+  content: "";
+  padding: 0;
+}
+
+.list-style-none {
+  list-style: none;
+}
+
+.data {
+  clear: both;
+  margin: 0 0 9px 25px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+[class^="app_45x45_icon"],
+[class*=" app_45x45_icon"] {
+  display: inline-block;
+  width: 48px;
+  height: 48px;
+  *margin-right: .3em;
+  line-height: 48px;
+  vertical-align: text-top;
+  background-position: 48px 48px;
+  background-repeat: no-repeat;
+  margin-top: 1px;
+}
+
+[class^="file_16x16_icon"],
+[class*=" app_16x16_icon"] {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  *margin-right: .3em;
+  line-height: 20px;
+  vertical-align: text-top;
+  background-position: 20px 20px;
+  background-repeat: no-repeat;
+  margin-top: 1px;
+  margin-right: 4px;
+}
+
+.app_45x45_icon-database
+{
+  background: url(../img/database.png);
+}
+
+.app_45x45_icon-dashboard
+{
+  background: url(../img/Dashboard-01.png);
+}
+
+.app_45x45_icon-Globe-Download
+{
+  background: url(../img/Globe-Download.png);
+}
+
+.app_45x45_icon-charts
+{
+  background: url(../img/custom-reports.png);  
+}
+.app_45x45_icon-gen-reports
+{
+  background: url(../img/gnumeric.png);  
+}
+
+.app_45x45_icon-programs
+{
+  background: url(../img/programs.png);  
+}
+
+.client-code
+{
+  font-size: 25px;
+  margin-top: 15px;
+}
+
+.client-description
+{
+  font-size: 15px;
+  margin-top: 15px;
+}
+
+.file_16x16_icon-xls
+{
+   background: url(../img/page_excel.png);
+}
+.file_16x16_icon-csv
+{
+   background: url(../img/text-csv.png);
+}
+.file_16x16_icon-xml
+{
+   background: url(../img/file-xml.png);
+}
+
+.arc path {
+  stroke: #fff;
+}
+
+.border
+{
+border: 1px solid #efe;
+border-collapse: separate;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+}
+
+.white_border
+{
+border: 1px solid #fff;
+border-collapse: separate;
+-webkit-border-radius: 4px;
+-moz-border-radius: 4px;
+border-radius: 4px;
+}

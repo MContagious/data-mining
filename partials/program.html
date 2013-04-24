@@ -1,0 +1,37 @@
+<div>
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+				<div class="column-fluid" ng-repeat="prog in programDbData">
+					<div>
+						<div class="navbar-inner">
+							<i class="app_45x45_icon-programs"/>
+							<b>{{prog.program_name}}</b>
+							<i class="file_16x16_icon-xml pull-right"/>
+							<i class="file_16x16_icon-csv pull-right"/>
+						</div>
+					</div>
+					<div class="border">
+						<ul class="thumbnails">
+							<li class="thumbnail" ng-repeat="db in prog.dbs | orderBy:sortByArrayLen">
+								<table class="table-striped table-condensed table-hover">
+									<caption>Database : {{db.name}} ({{db.vars.length}})</caption>
+									<thead>
+										<th>Column Name</th>
+										<th>Status</th>
+									</thead>
+									<tbody>
+										<tr ng-repeat="rec in db.vars">
+											<td>{{rec.name}}</td>
+											<td>{{rec.status}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

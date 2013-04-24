@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en" ng-app="appIT">
+<head>
+  <base href="/mytrips.com/">
+  <meta charset="utf-8">
+  <title>Datamining Reports</title>
+  <script src="http://code.jquery.com/jquery.js"></script>
+  <!--[if lte IE 7]><script src="assets/elusive-font/lte-ie7.js"></script><![endif]-->
+  <link href="css/bootstrap.css" rel="stylesheet" media="screen">
+  <link href="css/elusive-webfont.css" rel="stylesheet" media="screen">
+  <link href="css/app.css" rel="stylesheet" media="screen">
+  <link rel="stylesheet" type="text/css" href="css/jquery.jqplot.css" />
+  <script type="text/javascript" src="js/controllers.js"></script>  
+  <script type="text/javascript" src="js/bootstrap.js"></script>
+  <script type="text/javascript" src="lib/angular/angular.js"></script>
+  <script type="text/javascript" src="js/app.js"></script>
+  <script type="text/javascript" src="lib/jqplot/jquery.jqplot.min.js"></script> 
+  <script type="text/javascript" src="lib/jqplot/plugins/jqplot.dateAxisRenderer.min.js"></script>
+  <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasTextRenderer.min.js"></script>
+  <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
+  <script type="text/javascript" src="lib/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+  <script type="text/javascript" src="lib/jqplot/plugins/jqplot.barRenderer.min.js"></script>
+  <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+  <div class="navbar" ng-controller="menuCtrl">
+    <div class="navbar-inner">
+        <a href="#" class="brand">
+          <img src="http://infotraxsys.com/templates/infotrax/public/images/InfoTrax-Logo.png">
+        </a>
+        <ul class="nav keepItDownBy25px">        
+          <li class="{{mi.state}}"  ng-repeat="mi in menuItems"><a href="{{mi.target}}" ng-click="setMenuItemActive($event, mi.name)">{{mi.name}}</a></li>
+        </ul>
+    </div>
+  </div>
+  <div ng-view>
+  </div>
+</body>
+</html>

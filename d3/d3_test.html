@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.node {
+  font: 10px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+</style>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<title>D3 graph</title>
+</head>
+<body>
+
+<script>
+
+var width = 2200,
+    height = 4400;
+
+var cluster = d3.layout.cluster()
+    .size([height, width - 160]);
+
+var diagonal = d3.svg.diagonal()
+    .projection(function(d) { return [d.y, d.x]; });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+  .append("g")
+    .attr("transform", "translate(40,0)");
+
+//d3.json("flare.json", function(error, root) {
+d3.json("/cgi-bin/RESTfull/api/client/dot/reports/graph/program_deps/all", function(error, root) {
+  var nodes = cluster.nodes(root),
+      links = cluster.links(nodes);
+
+  var link = svg.selectAll(".link")
+      .data(links)
+    .enter().append("path")
+      .attr("class", "link")
+      .attr("d", diagonal);
+
+  var node = svg.selectAll(".node")
+      .data(nodes)
+    .enter().append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) { return "translate(" + d.y + "," + d.x + ")"; })
+
+  node.append("circle")
+      .attr("r", 4.5);
+
+  node.append("text")
+      .attr("dx", function(d) { return d.children ? -8 : 8; })
+      .attr("dy", 3)
+      .style("text-anchor", function(d) { return d.children ? "end" : "start"; })
+      .text(function(d) { return d.name; });
+});
+
+d3.select(self.frameElement).style("height", height + "px");
+
+</script>
+</body>
+</html>
+<!--
+<!doctype html>
+<html>
+<head><title>D3 learning</title>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+	<div>
+		<p>Test data 1</p>
+		<p>Test data 2</p>
+		<p>Test data 3</p>
+		<p>Test data 4</p>
+	</div>
+	<script type="text/javascript">
+		var data1 = [5,6,7,8,9,10];
+
+		d3.select('body').selectAll ('p').data(data1).enter().append('p').text (function (d){ return "Test data " + d;}).style ('font-size', function (d){ return d*5 + "px"; });
+
+		d3.selectAll ('p').style('color', function (d,i){
+			return i%2 == 1? "#aaa":'#eee';
+		});
+	</script>
+</body>
+</html>
+-->

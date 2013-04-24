@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<style type="text/css">
+div.bar {
+/*display: inline-block;*/
+width: 20px;
+height: 20px; /* We'll override height later */
+background-color: teal;
+margin-top: 2px;
+text-align: right;
+}
+</style>
+<title>D3 Test</title>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+<body>
+	<svg></svg>
+<script type="text/javascript">
+var dataset = [];
+for (var i=1; i<=10; i++) { dataset.push(Math.floor(Math.random()*35)+5); }
+//d3.select('body').selectAll('div').data(dataset).enter().append('div').attr('class','bar').style ('width', function (d) { return d*10 + 'px'}).tyle('font-weight', 'bolder').text(function (d){return d + ' '});
+var w = 260;
+var h = 100;
+var barPadding = 2;
+
+var svg = d3.select('svg').attr('height', h).attr('width', w);
+
+svg.selectAll ('rect').data(dataset).enter ().append('rect')
+		  	.attr ('x', function (d, i){ return (i*(w/dataset.length));})
+		  	.attr ('y',function (d) {return (h-d);})
+		  	.attr ('width', w/dataset.length - 1)
+		  	.attr ('height',function (d) {return (d*10);})
+		  	.attr ('fill', function (d){ return "rgb(0, 0," + d*10 +")";});
+svg.selectAll ('text')
+			.data(dataset)
+			.enter ()
+			.append('text')
+			.text (function (d){return d;})
+			.attr ('x', function (d, i){ return (i*(w/dataset.length)+(w/dataset.length - barPadding)/2);})
+		  	.attr ('y',function (d) {return (h-(d+4)+17);})
+		  	.attr ('fill', '#fff')
+		  	.attr ("text-anchor", "middle");
+</script>
+</body>
+</html>
