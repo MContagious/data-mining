@@ -202,26 +202,29 @@ function graphCtrl ($scope, NavMenu, $http, $routeParams)
 	$scope.menuItems  = NavMenu.menuItems;
 	$scope.clientCode = $routeParams.clientCode;
 	$scope.Gdata = [];
-	var root;
 	$http ({method:'JSON', url:'/cgi-bin/RESTfull/api/client/dot/reports/graph/program_deps/all'}).
 		success (function (data){			
 			$scope.Gdata = data;
-			root = data;
-			update(root);			
+			plot_graph (data);			
 		}).
 		error (function () {
 			//debugger;
 			$scope.Gdata = [];
 		});
+}
 
+function plot_graph (root)
+{
+	var tree = d3.layout.tree();
+	//debugger;
 	var margin = {top: 20, right: 120, bottom: 20, left: 120},
 	    width = 1100 - margin.right - margin.left,
-	    height = 1250*20 - margin.top - margin.bottom;
+	    height = tree.nodes(root).length*20 - margin.top - margin.bottom;
 	    
 	var i = 0,
 	    duration = 750;
 
-	var tree = d3.layout.tree()
+	tree = d3.layout.tree()
 		    	 .size([height, width]);
 
 	var diagonal = d3.svg.diagonal()
@@ -233,13 +236,12 @@ function graphCtrl ($scope, NavMenu, $http, $routeParams)
 			  	.append("g")
 			    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-	root = $scope.Gdata;
 	root.x0 = height / 2;
 	root.y0 = 0;
 
 	//root.children.forEach(collapse);
-	//update(root);
-	d3.select(self.frameElement).style("height", "4400px");
+	update(root);
+	d3.select(self.frameElement).style("height", (tree.nodes(root).length*20) + "px");
 	
 	function collapse(d) {
 	  if (d.children) {
@@ -252,6 +254,7 @@ function graphCtrl ($scope, NavMenu, $http, $routeParams)
 	function update(source) {
 
 	  // Compute the new tree layout.
+	  //debugger;
 	  var nodes = tree.nodes(root).reverse(),
 	      links = tree.links(nodes);
 
@@ -286,7 +289,7 @@ function graphCtrl ($scope, NavMenu, $http, $routeParams)
 
 	  nodeUpdate.select("circle")
 	      .attr("r", 4.5)
-	      .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
+	      .style("fill", color);
 
 	  nodeUpdate.select("text")
 	      .style("fill-opacity", 1);
@@ -347,4 +350,9 @@ function graphCtrl ($scope, NavMenu, $http, $routeParams)
 	  }
 	  update(d);
 	}
+
+	function color(d) {
+  		return d._children ? "#3182bd" : d.children ? "#c6dbef" : 
+                                              d.name.indexOf("Unable to find") == -1 ? "lightgreen" : "lightcoral";
+    }
 }
