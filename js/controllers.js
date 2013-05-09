@@ -202,7 +202,7 @@ function graphCtrl ($scope, NavMenu, $http, $routeParams)
 	$scope.menuItems  = NavMenu.menuItems;
 	$scope.clientCode = $routeParams.clientCode;
 	$scope.Gdata = [];
-	$http ({method:'JSON', url:'/cgi-bin/RESTfull/api/client/dot/reports/graph/program_deps/all'}).
+	$http ({method:'JSON', url:'/cgi-bin/RESTfull/api/client/'+$scope.clientCode+'/reports/graph/program_deps/all'}).
 		success (function (data){			
 			$scope.Gdata = data;
 			plot_graph (data);			
@@ -218,7 +218,7 @@ function plot_graph (root)
 	var tree = d3.layout.tree();
 	//debugger;
 	var margin = {top: 20, right: 120, bottom: 20, left: 120},
-	    width = 1100 - margin.right - margin.left,
+	    width = 1300 - margin.right - margin.left,
 	    height = tree.nodes(root).length*20 - margin.top - margin.bottom;
 	    
 	var i = 0,
@@ -279,8 +279,8 @@ function plot_graph (root)
 	      .attr("x", function(d) { return d.children || d._children ? -10 : 10; })
 	      .attr("dy", ".35em")
 	      .attr("text-anchor", function(d) { return d.children || d._children ? "end" : "start"; })
-	      .text(function(d) { return d.name; })
-	      .style("fill-opacity", 1e-6);
+	      .text(function(d) { return d.name; });
+//	      .style("fill-opacity", 1e-6);
 
 	  // Transition nodes to their new position.
 	  var nodeUpdate = node.transition()
@@ -353,6 +353,8 @@ function plot_graph (root)
 
 	function color(d) {
   		return d._children ? "#3182bd" : d.children ? "#c6dbef" : 
-                                              d.name.indexOf("Unable to find") == -1 ? "lightgreen" : "lightcoral";
+                                              d.name.indexOf("Not found") == -1 ?
+                                              	d.name.indexOf("Variable") == -1 ? "lightgreen" : "yellow" :
+                                              		"lightcoral";
     }
 }

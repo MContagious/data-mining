@@ -1,22 +1,49 @@
 <div class="container-fluid">
 	<div class="row-fluid">
-		<div class="span2">
-				<label class="control-label">Search</label>
-				<input type="text" ng-model="searchStr" placeholder="Start typing to find..">
+		<div class="span3">
+			<div class="row-fluid">
+				<div class="span12">
+					<div class="input-prepend div-border-heading search-box full-width">
+						<a class="icon-filter add-on"></a>
+						<input type="text" ng-model="searchStr" placeholder="Start typing to filter...">
+					</div>
+					<div class="div-border-heading ulg-upload full-width">
+						<form action="/cgi-bin/RESTfull/process/ULG" method="post">
+							<div class="input-prepend">
+								<span class="add-on">Client</span>
+								<select required>
+									<option value="">Select Client..</option>
+									<option ng-repeat="client in clients" value="{{client.code}}">{{client.code}}</option>
+								</select>
+							</div>
+							<div class="input-prepend input-append">
+								<span class="add-on">ULG file</span>
+								<input type="file" name="ulgfile" id="ulgfile" required></input>
+							</div>
+							<button type="submit" class="btn btn-primary">Upload</button>
+							<button type="reset" class="btn btn-inverse">Clear</button>
+						</form>
+					</div>
+				</div>
+			</div>
 		</div>
-		<div class="span10">
+		<div class="span9">
 			<ul class="list-style-none">
-				<li class="thumbnail data" ng-repeat="client in clients | filter:searchStr">				
+				<li class="thumbnail data" ng-repeat="client in clients | filter:searchStr">	
 						<div class="row-fluid">							
 							<a href="#/dashboard/client/{{client.code}}">
 								<span class="span3 client-code">{{client.code}}</span>
-								<span class="span4 client-description">{{client.name}}</span>								
+								<span class="span4 client-description">{{client.name}}</span>
 							</a>
 							<span class="span3">
-								<a href="dashboard/client/{{client.code}}"><i class="app_45x45_icon-dashboard" title="View details in a dashboard"/></a>
+								<!--
+								<a href="#/dashboard/client/{{client.code}}"><i class="app_45x45_icon-dashboard" title="View details in a dashboard"/></a> -->
+								<a href="#/dashboard/client/{{client.code}}"><i class="app_45x45_icon-programs" title="View details of programs"/></a>
 								<a href="#/databases/client/{{client.code}}/db/all"><i class="app_45x45_icon-database" title="Get details about databases"/></a>
 								<a href="#/reports/client/{{client.code}}"><i class="app_45x45_icon-charts" title="View detailed reports"/></a>
+								<!--
 								<a href="#/downloads/client/{{client.code}}"><i class="app_45x45_icon-Globe-Download" title="Download data in xls/csv/xml format"/></a>
+								-->
 							</span>
 						</div>
 					</a>
