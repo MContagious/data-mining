@@ -1,3 +1,27 @@
+<style>
+
+.node {
+  cursor: pointer;
+}
+
+.node circle {
+  fill: #fff;
+  stroke: steelblue; 
+  stroke-width: 1.5px;
+}
+
+.node text {
+  font: 10px sans-serif;
+}
+
+.link {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5px;
+}
+
+</style>
+
 <div>
 	<div class="container-fluid">
 		<div class="row-fluid">
@@ -11,25 +35,42 @@
 							<i class="file_16x16_icon-csv pull-right"/>
 						</div>
 					</div>
-					<div class="border">
-						<ul class="thumbnails">
-							<li class="thumbnail" ng-repeat="db in prog.dbs | orderBy:sortByArrayLen">
-								<table class="table-striped table-condensed table-hover">
-									<caption>Database : {{db.name}} ({{db.vars.length}})</caption>
-									<thead>
-										<th>Column Name</th>
-										<th>Status</th>
-									</thead>
-									<tbody>
-										<tr ng-repeat="rec in db.vars">
-											<td>{{rec.name}}</td>
-											<td>{{rec.status}}</td>
-										</tr>
-									</tbody>
-								</table>
-							</li>
-						</ul>
+					<div class="div-border-heading info-dateVscallcount-box span11">
+						<div ng-show="widgets.graph.status" id="graph_callcnt">
+							
+						</div>
+						<i class="{{widgets.graph.icon}} pull-right" ng-click="toggle(widgets.graph)"></i>
 					</div>
+					<div class="div-border-heading info-program-dependency-graph span11">
+						<div ng-show="widgets.depgraph.status" id="graph_progdeps"/>
+						<i class="{{widgets.depgraph.icon}} pull-right" ng-click="toggle(widgets.depgraph)"></i>			
+					</div>
+					<div class="div-border-heading info-variables-box span11">
+						<div ng-show="widgets.variables.status">
+						</div>
+						<i class="{{widgets.variables.icon}} pull-right" ng-click="toggle(widgets.variables)"></i>
+					</div>
+					<div class="div-border-heading info-database-box span11">
+						<div ng-show="widgets.database.status">					
+							<ul class="thumbnails">
+								<li class="thumbnail" ng-repeat="db in prog.dbs | orderBy:sortByArrayLen">
+									<table class="table-striped table-condensed table-hover">
+										<caption>Database : {{db.name}} ({{db.vars.length}})</caption>
+										<thead>
+											<th>Column Name</th>
+											<th>Status</th>
+										</thead>
+										<tbody>
+											<tr ng-repeat="rec in db.vars">
+												<td>{{rec.name}}</td>
+												<td>{{rec.status}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</li>
+							</ul>
+						</div>
+					<i class="{{widgets.database.icon}} pull-right" ng-click="toggle(widgets.database)"></i>
 				</div>
 			</div>
 		</div>

@@ -164,6 +164,39 @@ border-radius: 4px;
     content: "Filter clients...";
 }
 
+.info-box:after {
+  content: "Info";
+}
+
+.info-database-box:after {
+  content: "Databases";
+}
+
+.info-variables-box:after {
+  content: "Variables";
+}
+
+.info-dateVscallcount-box:after {
+  content: "Datewise call count";
+}
+
+.info-program-dependency-graph:after {
+  content: "Program Dependency Graph";
+}
+
+.info-ulg-about:after {
+  content: "About-ULGFile";
+}
+.info-program-icon:after {
+  content: "About-Program-Icon";
+}
+.info-database-icon:after {
+  content: "About-Database-Icon";
+}
+.info-graph-icon:after {
+  content: "About-ProgramDependencyGraph-Icon";
+}
+
 /* Echo out a label for the example */
 .div-border-heading:after {
   position: absolute;
@@ -188,4 +221,33 @@ border-radius: 4px;
 
 .full-width {
   width:100%;
+}
+
+/* Footer css from bootstrap home page */
+
+.footer {
+text-align: center;
+padding: 30px 0;
+margin-top: 70px;
+border-top: 1px solid #e5e5e5;
+background-color: #f5f5f5;
+}
+
+.built-with-images {
+  margin: 1 auto 30px;
+  max-height: 30px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 2em;
+  vertical-align: middle;
+}
+
+.color-code {
+  padding: 2px 4px;
+  border: 1px solid gray;
+  border-radius: 3px;
+  white-space: nowrap;
+  line-height: 20px;
+  font-family: Monaco, Menlo, Consolas, "Courier New", monospace;
+  font-size: 12px;
 }

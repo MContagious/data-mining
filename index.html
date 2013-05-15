@@ -6,6 +6,7 @@
   <title>Datamining Reports</title>
   <script src="http://code.jquery.com/jquery.js"></script>
   <!--[if lte IE 7]><script src="assets/elusive-font/lte-ie7.js"></script><![endif]-->
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
   <link href="css/bootstrap.css" rel="stylesheet" media="screen">
   <link href="css/elusive-webfont.css" rel="stylesheet" media="screen">
   <link href="css/app.css" rel="stylesheet" media="screen">
@@ -20,6 +21,7 @@
   <script type="text/javascript" src="lib/jqplot/plugins/jqplot.canvasAxisTickRenderer.min.js"></script>
   <script type="text/javascript" src="lib/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
   <script type="text/javascript" src="lib/jqplot/plugins/jqplot.barRenderer.min.js"></script>
+   <script type="text/javascript" src="lib/jqplot/plugins/jqplot.pointLabels.min.js"></script>
   <script type="text/javascript" src="http://d3js.org/d3.v3.min.js"></script>
 </head>
 <body>
@@ -29,11 +31,21 @@
           <img src="http://infotraxsys.com/templates/infotrax/public/images/InfoTrax-Logo.png">
         </a>
         <ul class="nav keepItDownBy25px">        
-          <li class="{{mi.state}}"  ng-repeat="mi in menuItems"><a href="{{mi.target}}" ng-click="setMenuItemActive($event, mi.name)">{{mi.name}}</a></li>
+          <li class="{{mi.state}}"  ng-repeat="mi in menuItems"><a href="{{mi.target}}" ng-click="setMenuItemActive($event, mi.name)"><i class="icon-home"></i>{{mi.name}}</a></li>
         </ul>
     </div>
   </div>
   <div ng-view>
   </div>
+  <!-- Footer -->
+  <footer class="footer">
+    <p><strong>Built With </strong>
+      <a href="http://www.w3.org/html/wg/drafts/html/master/"><img class="built-with-images" src="http://upload.wikimedia.org/wikipedia/commons/thumb/0/02/HTML5_logo.svg/120px-HTML5_logo.svg.png" title="HTML5"/></a>
+      <a href="http://angularjs.org/"><img class="built-with-images" src="http://angularjs.org/img/AngularJS-large.png" title="Angular.js"/></a>
+      <a href="http://twitter.github.io/bootstrap/"><img class="built-with-images" src="http://twitter.github.io/bootstrap/assets/ico/favicon.png" title="Twitter's Bootstrap css framework"/></a>
+      <a href="http://d3js.org/" title="Data Driven Documents" class="
+      built-with-images"><strong>D3.js</strong></a>
+    </p>
+  </footer>
 </body>
 </html>

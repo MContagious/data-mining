@@ -24,6 +24,50 @@
 							<button type="reset" class="btn btn-inverse">Clear</button>
 						</form>
 					</div>
+					<div class="div-border-heading info-ulg-about full-width">
+						<ul>
+							<li>An ULGfile contains <code>User-ID</code><code>Run-Date</code> <code>Program-ID</code><code>Program-Count</code></li>
+							<li>ULG File is the base for getting datamining reports.</li>
+							<li>The data-mining program pulls the information from datatrax source control system by using the ULGfile.</li>
+							<li> The reports can be viewed iff an ULG file was already submitted to the system for a client.</li>
+						</ul>
+					</div>
+					<div class="div-border-heading info-program-icon full-width">
+						<i class="app_45x45_icon-programs" title="View details of programs"/>
+						<ul>
+							<li>Lists all the application-id's found in the ULGFile</li>
+							<li>The list can be filtered by program-id name or date it was called as listed in ULGFile</li>
+							<li>Each program-id link/Button lists 
+								<ul>
+									<li>The databases it is using</li>
+									<li class="text-error">Variables and their values fetched from database(tables)</li>
+								</ul>
+						</ul>
+					</div>
+					<div class="div-border-heading info-database-icon full-width">
+						<i class="app_45x45_icon-database" title="Get details about databases"/>
+						<ul>
+							<li>Lists all the databases found in the revision control</li>
+							<li>By default all the database details were hidden in the web page as the list is huge and impacting the performance</li>
+							<li>Click on the header of the database to view details</li>			
+							<li>Clicking on the header again will hide the information</li>						
+						</ul>
+					</div>
+					<div class="div-border-heading info-graph-icon full-width">
+						<i class="app_45x45_icon-charts" title="View program dependency graph"/>
+						<ul>
+							<li>Shows the program-id dependency graph</li>
+							<li>Node Colors and their meaning
+								<ul>
+									<li><span class="color-code" style="background-color:steelblue">steelblue</span> : Collapsed node</li>
+									<li><span class="color-code" style="background-color:lightblue">lightblue</span> : Node has children</li>
+									<li><span class="color-code" style="background-color:lightcoral">lightcoral</span> : The program was not found/not source controlled in revision control system</li>
+									<li><span class="color-code" style="background-color:lightgreen">lightgreen</span> : The program has no dependencies(End node)</li>
+									<li><span class="color-code" style="background-color:yellow">yellow</span> : The node indicates a variable.</li>
+								</ul>
+							</li>							
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -40,7 +84,7 @@
 								<a href="#/dashboard/client/{{client.code}}"><i class="app_45x45_icon-dashboard" title="View details in a dashboard"/></a> -->
 								<a href="#/dashboard/client/{{client.code}}"><i class="app_45x45_icon-programs" title="View details of programs"/></a>
 								<a href="#/databases/client/{{client.code}}/db/all"><i class="app_45x45_icon-database" title="Get details about databases"/></a>
-								<a href="#/reports/client/{{client.code}}"><i class="app_45x45_icon-charts" title="View detailed reports"/></a>
+								<a href="#/reports/client/{{client.code}}"><i class="app_45x45_icon-charts" title="View program dependency graph"/></a>
 								<!--
 								<a href="#/downloads/client/{{client.code}}"><i class="app_45x45_icon-Globe-Download" title="Download data in xls/csv/xml format"/></a>
 								-->

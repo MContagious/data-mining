@@ -29,46 +29,16 @@ function dashboardCtrl ($scope, NavMenu, $http, $routeParams) {
 			$scope.programNames = data.programs;
 			$scope.dates = data.dates;
 			$scope.chartData = data.charting;
-			$scope.update_chart_dates_prog_cout ($scope.chartData, 'chart_dates_prog_count');
+			$scope.update_chart_dates_prog_count ($scope.chartData,
+									 			  'chart_dates_prog_count',
+									 			  'Datewise Unique Program-ID count');
 		}).
 		error (function () {
 			//debugger;
 			$scope.clients = {};
 		});
 
-	$scope.update_chart_dates_prog_cout = function (cData, plotTarget){
-		   	  var s1 = [];
-		   	  debugger;
-			  $.each(cData, function (prop, val) {
-			  	s1.push ([prop, val]);
-			  });
-
-			  var plot3 = $.jqplot(plotTarget, [s1], {
-			    title: 'Datewise Unique Program-ID count',
-			    series:[{renderer:$.jqplot.BarRenderer}],
-			    axesDefaults: {
-			        tickRenderer: $.jqplot.CanvasAxisTickRenderer,
-			        tickOptions: {
-			          angle: -60
-			        }
-			    },
-			    axes: {
-			      xaxis: {
-			        renderer: $.jqplot.CategoryAxisRenderer,
-			        tickOptions: {
-			          labelPosition: 'middle'
-			        }
-			      },
-			      yaxis: {
-			        autoscale:true,
-			        tickRenderer: $.jqplot.CanvasAxisTickRenderer,
-			        tickOptions: {
-			          labelPosition: 'start'
-			        }
-			      }
-			    }
-			  });
-	};
+	$scope.update_chart_dates_prog_count = update_chart_dates_prog_count;
 
 	$scope.toggle = function (e){
 		e.status = !(e.status);
@@ -133,6 +103,14 @@ function programCtrl ($scope, NavMenu, $http, $routeParams)
 	$scope.menuItems = NavMenu.menuItems;
 	$scope.client 	 = $routeParams.clientCode;
 	$scope.program 	 = $routeParams.programCode;
+	$scope.date_wise_call_cnt = [];
+	$scope.widgets = {
+		'database':{'status':true, 'icon':'icon-arrow-up', 'classTrue':'icon-arrow-up', 'classFalse':'icon-arrow-down'},		
+		'graph':{'status':true, 'icon':'icon-arrow-up', 'classTrue':'icon-arrow-up', 'classFalse':'icon-arrow-down'},		
+		'depgraph':{'status':true, 'icon':'icon-arrow-up', 'classTrue':'icon-arrow-up', 'classFalse':'icon-arrow-down'},
+		'variables':{'status':false, 'icon':'icon-arrow-down','classTrue':'icon-arrow-up', 'classFalse':'icon-arrow-down'}
+	};
+
 	$scope.programDbData = [];
 
 	$http ({method:'JSON', url:'/cgi-bin/RESTfull/api/database/all/client/' + 
@@ -147,8 +125,44 @@ function programCtrl ($scope, NavMenu, $http, $routeParams)
 			$scope.programDbData = [];
 		});
 
+	$http ({method:'JSON', url:'/cgi-bin/RESTfull/api/client/' + 
+								$routeParams.clientCode +
+								'/reports/graph/program_deps/' + 
+								$scope.program + 
+								'/date_wise_call_cnt/' + 
+								$scope.program}).
+		success (function (data){
+			$scope.dates = data.dates;
+			
+			$scope.Gdata = data.program_dep_graph;
+			plot_graph ($scope.Gdata, '#graph_progdeps');
+
+			$scope.date_wise_call_cnt = data.date_wise_call_cnt;
+			$scope.update_chart_dates_prog_count ($scope.date_wise_call_cnt, 'graph_callcnt');
+		}).
+		error (function () {
+			//debugger;
+			$scope.Gdata = {};
+			$scope.date_wise_call_cnt = [[]];
+		});
+
+	$scope.update_chart_dates_prog_count = update_chart_dates_prog_count;
+
+
 	$scope.sortByArrayLen = function (db) {
 		return db.vars.length*-1;
+	};
+
+	$scope.toggle = function (e){
+		e.status = !(e.status);
+		if (e.status)
+		{
+			e.icon = e.classTrue;
+		}
+		else
+		{
+			e.icon = e.classFalse;
+		}
 	};
 }
 
@@ -176,7 +190,7 @@ function databasesCtrl ($scope, NavMenu, $http, $routeParams)
 	};
 
 	$scope.showHide = function (db) {
-		debugger;
+		// debugger;
 		if (typeof db.show === 'undefined')
 		{
 			db.show = true;
@@ -205,7 +219,7 @@ function graphCtrl ($scope, NavMenu, $http, $routeParams)
 	$http ({method:'JSON', url:'/cgi-bin/RESTfull/api/client/'+$scope.clientCode+'/reports/graph/program_deps/all'}).
 		success (function (data){			
 			$scope.Gdata = data;
-			plot_graph (data);			
+			plot_graph (data, '#graph');
 		}).
 		error (function () {
 			//debugger;
@@ -213,7 +227,7 @@ function graphCtrl ($scope, NavMenu, $http, $routeParams)
 		});
 }
 
-function plot_graph (root)
+function plot_graph (root, graphTarget)
 {
 	var tree = d3.layout.tree();
 	//debugger;
@@ -230,7 +244,7 @@ function plot_graph (root)
 	var diagonal = d3.svg.diagonal()
 	    			 .projection(function(d) { return [d.y, d.x]; });
 
-	var svg = d3.select("#graph").append("svg")
+	var svg = d3.select('#graph_progdeps').append("svg")
 			    .attr("width", width + margin.right + margin.left)
 			    .attr("height", height + margin.top + margin.bottom)
 			  	.append("g")
@@ -352,9 +366,53 @@ function plot_graph (root)
 	}
 
 	function color(d) {
-  		return d._children ? "#3182bd" : d.children ? "#c6dbef" : 
+  		return d._children ? "steelblue" : d.children ? "lightblue" : 
                                               d.name.indexOf("Not found") == -1 ?
                                               	d.name.indexOf("Variable") == -1 ? "lightgreen" : "yellow" :
                                               		"lightcoral";
     }
 }
+
+ function update_chart_dates_prog_count (cData, plotTarget, gTitle){
+		   	  var s1 = cData;
+		   	  //debugger;
+			  // $.each(cData, function (prop, val) {
+			  // 	s1.push ([prop, val]);
+			  // });
+
+			  var plot3 = $.jqplot(plotTarget, [s1], {
+			    title: gTitle,
+			    seriesDefaults: {
+			        pointLabels: { 
+			        	show: true,
+			         	edgeTolerance: -15,
+			         	hideZeros: false			         	
+			         }
+			    },
+			    series:[{renderer:$.jqplot.BarRenderer}],
+
+			    axesDefaults: {
+			        tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+			        // tickOptions: {
+			        //   angle: 60
+			        // }
+			    },
+			    axes: {
+			      xaxis: {
+			        renderer: $.jqplot.CategoryAxisRenderer,
+			        tickOptions: {
+			          labelPosition: 'start',
+			          angle: 60
+			        }
+			      },
+			      yaxis: {
+			        autoscale:true,
+			        tickRenderer: $.jqplot.CanvasAxisTickRenderer,
+			        tickOptions: {
+			          labelPosition: 'middle',
+			          angle : 0
+			        }
+			      }
+			    }
+			  });
+	};
